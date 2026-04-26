@@ -1,0 +1,73 @@
+version: '3.8'
+
+# Adaptive Academic Advisor - Full Stack Deployment
+# 
+# Services:
+#   - backend: FastAPI server (port 8000)
+#   - frontend: Next.js UI (port 3000)
+#
+# Configuration:
+#   - Without ANTHROPIC_API_KEY: Chat uses mock data
+#   - With ANTHROPIC_API_KEY: Chat uses real AI responses
+#
+# Usage:
+#   docker-compose up
+#   docker-compose up -d  (background)
+#   docker-compose down
+#
+# Set API key in .env or via shell:
+#   ANTHROPIC_API_KEY="sk-ant-..." docker-compose up
+
+services:
+  backend:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: academic-advisor-backend
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./data:/app/data
+      - ./src:/app/src
+    environment:
+      # Optional: Add Anthropic API key for real AI responses
+      # Leave empty to use mock data
+      - ANTHROPIC_API_KEY=${ANTHROPIC_API_KEY:-}
+      
+      # CORS configuration for frontend
+      - ALLOWED_ORIGINS=${ALLOWED_ORIGINS:-http://localhost:3000,http://localhost:8000}
+      
+      # Server port
+      - PORT=8000
+      
+      # Logging
+      - LOG_LEVEL=${LOG_LEVEL:-INFO}
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/health"]
+      interval: 10s
+      timeout: 5s
+      retries: 3
+    networks:
+      - advisor-network
+
+  frontend:
+    build:
+      context: ./src/ui
+      dockerfile: Dockerfile
+    container_name: academic-advisor-ui
+    ports:
+      - "3000:3000"
+    environment:
+      # Backend API URL
+      - NEXT_PUBLIC_API_URL=${NEXT_PUBLIC_API_URL:-http://localhost:8000/api}
+    depends_on:
+      backend:
+        condition: service_healthy
+    restart: unless-stopped
+    networks:
+      - advisor-network
+
+networks:
+  advisor-network:
+    driver: bridge

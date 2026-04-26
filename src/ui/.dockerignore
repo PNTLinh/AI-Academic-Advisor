@@ -1,0 +1,14 @@
+node_modules
+.next
+.git
+.gitignore
+.env
+.env.*
+*.md
+.DS_Store
+.turbo
+dist
+build
+.cache
+*.lock
+pnpm-lock.yaml.backup

@@ -1,0 +1,27 @@
+{
+  "version": 1,
+  "hooks": {
+    "userPromptSubmitted": [
+      {
+        "type": "command",
+        "bash": "python scripts/log_hook.py",
+        "powershell": "python scripts/log_hook.py",
+        "env": {
+          "AI_TOOL_NAME": "copilot"
+        },
+        "timeoutSec": 10
+      }
+    ],
+    "sessionEnd": [
+      {
+        "type": "command",
+        "bash": "python scripts/log_hook.py",
+        "powershell": "python scripts/log_hook.py",
+        "env": {
+          "AI_TOOL_NAME": "copilot"
+        },
+        "timeoutSec": 10
+      }
+    ]
+  }
+}

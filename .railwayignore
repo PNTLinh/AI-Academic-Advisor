@@ -1,0 +1,27 @@
+# Railway ignore patterns
+# Files that don't need to be deployed
+
+.git
+.gitignore
+.github
+.venv
+__pycache__
+*.pyc
+node_modules
+.next
+dist
+build
+.DS_Store
+.env.local
+*.log
+.vscode
+.idea
+JOURNAL.md
+WORKLOG.md
+GUIDE.md
+README.md
+DEPLOYMENT.md
+QUICK_START.md
+RAILWAY_DEPLOY.md
+*.bak
+data/academic.db.bak

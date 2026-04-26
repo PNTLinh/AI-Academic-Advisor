@@ -1,0 +1,34 @@
+node_modules
+.git
+.gitignore
+.env
+.env.*
+*.md
+.venv
+__pycache__
+*.pyc
+.pytest_cache
+.DS_Store
+build
+dist
+*.egg-info
+data/academic.db*
+data/uploads/*
+.next
+.ai-log
+*.db
+*.sqlite
+.pytest
+.coverage
+# Benchmark & evaluation files (not needed in production)
+src/benchmark/
+# Data output & processing (not needed in production)
+data/output/
+data/processing_regulation.py
+data/test_cases.py
+data/*.bak
+data/*.sql
+# UI build artifacts
+src/ui/.next/
+src/ui/node_modules/
+src/ui/.vercel/
